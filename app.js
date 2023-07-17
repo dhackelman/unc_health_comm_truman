@@ -81,7 +81,9 @@ const app = express();
  */
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, { useNewUrlParser: true });
+const local_mongodb = 'mongodb://localhost:27017/';
+mongoose.connect(process.env.MONGODB_URI || local_mongodb, { useNewUrlParser: true });
+var db = mongoose.connection;
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -176,7 +178,7 @@ app.use(session({
   },
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
-    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+    url: process.env.MONGODB_URI || local_mongodb,
     autoReconnect: true,
     clear_interval: 3600
   })

@@ -31,8 +31,8 @@ var MongoClient = require('mongodb').MongoClient
 
 
 //var connection = mongo.connect('mongodb://127.0.0.1/test');
-
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, { useNewUrlParser: true });
+const local_mongodb = 'mongodb://localhost:27017/';
+mongoose.connect(process.env.MONGODB_URI || local_mongodb, { useNewUrlParser: true });
 var db = mongoose.connection;
 mongoose.connection.on('error', (err) => {
     console.error(err);
